@@ -5,7 +5,7 @@ build/
 bin
 *.a
 *.old
-*.projbuild
+build/**/*.projbuild.
 sdkconfig.old
 sdkconfig
 .cproject
