@@ -26,9 +26,6 @@
 #include "driver/gpio.h"
 #include "freertos/event_groups.h"
 
-/*WIFI configuration*/
-#define ESP_WIFI_SSID      ""
-#define ESP_WIFI_PASS      ""
 #define ESP_MAXIMUM_RETRY  10
 
 /* The event group allows multiple bits for each event, but we only care about two events:
@@ -91,8 +88,8 @@ void wifi_init_sta(void) {
 
     wifi_config_t wifi_config = {
         .sta = {
-            .ssid = ESP_WIFI_SSID,
-            .password = ESP_WIFI_PASS,
+            .ssid =     CONFIG_ESP_WIFI_SSID,
+            .password = CONFIG_ESP_WIFI_PASSWORD,
             /* Setting a password implies station will connect to all security modes including WEP/WPA.
              * However these modes are deprecated and not advisable to be used. Incase your Access point
              * doesn't support WPA2, these mode can be enabled by commenting below line */
@@ -105,7 +102,7 @@ void wifi_init_sta(void) {
         },
     };
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
-    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
     ESP_ERROR_CHECK(esp_wifi_start() );
 
     ESP_LOGI(TAG1, "wifi_init_sta finished.");
@@ -122,10 +119,10 @@ void wifi_init_sta(void) {
      * happened. */
     if (bits & WIFI_CONNECTED_BIT) {
         ESP_LOGI(TAG1, "connected to ap SSID:%s password:%s",
-                 ESP_WIFI_SSID, ESP_WIFI_PASS);
+                 CONFIG_ESP_WIFI_SSID, CONFIG_ESP_WIFI_PASSWORD);
     } else if (bits & WIFI_FAIL_BIT) {
         ESP_LOGI(TAG1, "Failed to connect to SSID:%s, password:%s",
-                 ESP_WIFI_SSID, ESP_WIFI_PASS);
+                 CONFIG_ESP_WIFI_SSID, CONFIG_ESP_WIFI_PASSWORD);
     } else {
         ESP_LOGE(TAG1, "UNEXPECTED EVENT");
     }

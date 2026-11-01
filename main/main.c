@@ -42,7 +42,8 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     //Change it the pin that has a led
-	gpio_pad_select_gpio(LED);
+    // gpio_set_direction() selects the pad's GPIO function itself, so the
+    // legacy gpio_pad_select_gpio() (removed in IDF v5+) is not needed here.
 	gpio_set_direction(LED, GPIO_MODE_OUTPUT);
 	gpio_set_level(LED, 1);
 
