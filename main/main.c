@@ -25,13 +25,9 @@
 #include "esp_http_client.h"
 #include "driver/gpio.h"
 #include "freertos/event_groups.h"
-#include "wifi_handler.h"
-#include "rest_handler.h"
+#include "include/wifi_handler.h"
+#include "include/rest_handler.h"
 
-//Pin connected to a led
-#define LED (GPIO_NUM_13)
-static const char *TAG = "Main";
-    
 void app_main(void)
 {
     //Initialize NVS
@@ -41,13 +37,6 @@ void app_main(void)
       ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
-
-    //Change it the pin that has a led
-    // gpio_set_direction() selects the pad's GPIO function itself, so the
-    // legacy gpio_pad_select_gpio() (removed in IDF v5+) is not needed here.
-	gpio_set_direction(LED, GPIO_MODE_OUTPUT);
-	gpio_set_level(LED, 1);
-    ESP_LOGW(TAG, "Booting...");
 
     wifi_init_sta();
 
