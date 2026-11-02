@@ -18,16 +18,10 @@ menu "Device Configuration"
         help
             Token of the Telegram bot to use for sending messages
 
-    config ESP_TELEGRAM_CHAT_ID1
-        string "Telegram Chat ID 1"
-        default "@GROUP_NAME"
+    config ESP_TELEGRAM_CHAT_ID
+        string "Telegram Chat ID"
+        default "CHAT ID"
         help
-            Chat ID of the first recipient group or user
-
-    config ESP_TELEGRAM_CHAT_ID2
-        string "Telegram Chat ID 2"
-        default "12345678"
-        help
-            Chat ID of the second recipient group or user
+            Chat ID of the recipient group
 
 endmenu

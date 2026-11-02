@@ -1,15 +1,5 @@
-/* esp-idf-telegram-bot
- *
- * Author: antusystem
- * e-mail: aleantunes95@gmail.com
- * Date: 11-01-2020
- * MIT License
- * As it is described in the readme file
- *
-*/
-
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
+// #include "freertos/task.h"
 #include "esp_err.h"
 #include "nvs_flash.h"
 #include "include/wifi_handler.h"
@@ -26,7 +16,8 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     wifi_init_sta();
+    telegram_sendMessage();
 
-    xTaskCreatePinnedToCore(&http_test_task, "http_test_task", 8192*4, NULL, 5, NULL,1);
+    //xTaskCreatePinnedToCore(&http_test_task, "http_test_task", 8192*4, NULL, 5, NULL,1);
 
 }

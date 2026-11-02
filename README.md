@@ -9,7 +9,7 @@ Open https://api.telegram.org/bot<TOKEN>/getUpdates
 You should now see something like:
 "chat":{"id":123456789,"first_name":"...","type":"private"}
 Copy that id. It's negative for groups.
-Set it as ESP_TELEGRAM_CHAT_ID2 in idf.py menuconfig, then rebuild and flash.
+Set it as ESP_TELEGRAM_CHAT_ID in idf.py menuconfig, then rebuild and flash.
 
 Based on https://github.com/antusystem/esp-idf-telegram-bot.
 

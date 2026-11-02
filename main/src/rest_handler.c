@@ -20,13 +20,12 @@ static const char *TAG = "Rest Handler";
    To embed it in the app binary, the PEM file is named
    in the component.mk COMPONENT_EMBED_TXTFILES variable.
 */
-char url_string[512] = "https://api.telegram.org/bot";
 extern const char telegram_certificate_pem_start[] asm("_binary_telegram_certificate_pem_start");
 extern const char telegram_certificate_pem_end[]   asm("_binary_telegram_certificate_pem_end");
 
-void https_telegram_sendMessage_perform_post(void) {
+void telegram_sendMessage(void) {
 	char url[512] = "";
-    char output_buffer[MAX_HTTP_OUTPUT_BUFFER] = {0};   // Buffer to store response of http request
+    char output_buffer[MAX_HTTP_OUTPUT_BUFFER] = {0};   
     esp_http_client_config_t config = {
         .url = "https://api.telegram.org",
         .transport_type = HTTP_TRANSPORT_OVER_SSL,
@@ -36,12 +35,11 @@ void https_telegram_sendMessage_perform_post(void) {
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
 
-    strcat(url,url_string);
-    strcat(url,"/sendMessage");
+    snprintf(url, sizeof(url), "https://api.telegram.org/bot%s/sendMessage", CONFIG_ESP_TELEGRAM_TOKEN);
     //ESP_LOGW(TAG, "url string es: %s",url);
     esp_http_client_set_url(client, url);
 	char post_data[512] = "";
-	sprintf(post_data,"{\"chat_id\":%s,\"text\":\"Here goes the message from post\"}",CONFIG_ESP_TELEGRAM_CHAT_ID2);
+	snprintf(post_data, sizeof(post_data), "{\"chat_id\":%s,\"text\":\"Here goes the message from post\"}",CONFIG_ESP_TELEGRAM_CHAT_ID);
     //ESP_LOGW(TAG, "Json: %s",post_data);
     esp_http_client_set_method(client, HTTP_METHOD_POST);
     esp_http_client_set_header(client, "Content-Type", "application/json");
@@ -60,13 +58,4 @@ void https_telegram_sendMessage_perform_post(void) {
     esp_http_client_close(client);
     esp_http_client_cleanup(client);
     //ESP_LOGI(TAG, "esp_get_free_heap_size: %d", esp_get_free_heap_size ());
-}
-
-void http_test_task(void *pvParameters) {
-    strcat(url_string,CONFIG_ESP_TELEGRAM_TOKEN);
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-
-    ESP_LOGW(TAG, "Send to Telegram");
-    https_telegram_sendMessage_perform_post();
-    vTaskDelete(NULL);
 }
