@@ -1,12 +1,12 @@
 {
-    "idf.currentSetup": "/mnt/nvm/.espressif/v6.1/esp-idf",
+    "idf.currentSetup": "/mnt/nvm/.espressif/v6.0.2/esp-idf",
     "idf.openOcdConfigs": [
         "board/esp32c6-lpcore-builtin.cfg"
     ],
     "idf.customExtraVars": {
-        "IDF_PATH": "/mnt/nvm/.espressif/v6.1/esp-idf",
+        "IDF_PATH": "/mnt/nvm/.espressif/v6.0.2/esp-idf",
         "IDF_TOOLS_PATH": "/mnt/nvm/.espressif",
-        "IDF_PYTHON_ENV_PATH": "/mnt/nvm/.espressif/python_env/idf6.1_py3.14_env",
+        "IDF_PYTHON_ENV_PATH": "/mnt/nvm/.espressif/python_env/idf6.0_py3.14_env",
         "IDF_TARGET": "esp32s3",
         "OPENOCD_USB_ADAPTER_LOCATION": "1-4.4"
     },

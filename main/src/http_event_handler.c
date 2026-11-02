@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include "esp_idf_version.h"
 #include "esp_log.h"
 #include "esp_tls.h"
 #include "http_event_handler.h"
@@ -12,15 +13,19 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
         case HTTP_EVENT_ERROR:
             ESP_LOGD(TAG, "HTTP_EVENT_ERROR");
             break;
+#if ESP_IDF_VERSION_MAJOR >= 6
         case HTTP_EVENT_ON_STATUS_CODE:
             ESP_LOGD(TAG, "HTTP_EVENT_ON_STATUS_CODE");
-            break;         
+            break;  
+#endif
         case HTTP_EVENT_REDIRECT:
             ESP_LOGD(TAG, "HTTP_EVENT_REDIRECT");
             break;  
+#if ESP_IDF_VERSION_MAJOR >= 6
         case HTTP_EVENT_ON_HEADERS_COMPLETE:
             ESP_LOGD(TAG, "HTTP_EVENT_ON_HEADERS_COMPLETE");
             break;    
+#endif
         case HTTP_EVENT_ON_CONNECTED:
             ESP_LOGD(TAG, "HTTP_EVENT_ON_CONNECTED");
             break;

@@ -8,7 +8,9 @@
  *
 */
 
+#include <stdio.h>
 #include <string.h>
+#include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "esp_http_client.h"
@@ -49,7 +51,7 @@ void https_telegram_sendMessage_perform_post(void) {
 
     strcat(url,url_string);
     strcat(url,"/sendMessage");
-    //ESP_LOGW(TAG3, "url string es: %s",url);
+    //ESP_LOGW(TAG2, "url string es: %s",url);
     esp_http_client_set_url(client, url);
 	char post_data[512] = "";
 	sprintf(post_data,"{\"chat_id\":%s,\"text\":\"Here goes the message from post\"}",CONFIG_ESP_TELEGRAM_CHAT_ID2);
@@ -60,9 +62,9 @@ void https_telegram_sendMessage_perform_post(void) {
 
     esp_err_t err = esp_http_client_perform(client);
     if (err == ESP_OK) {
-        ESP_LOGI(TAG2, "HTTP POST Status = %d, content_length = %d",
+        ESP_LOGI(TAG2, "HTTP POST Status = %d, content_length = %lld",
                 esp_http_client_get_status_code(client),
-                esp_http_client_get_content_length(client));
+                (long long)esp_http_client_get_content_length(client));
         ESP_LOGW(TAG2, "Output: %s",output_buffer);
 
     } else {

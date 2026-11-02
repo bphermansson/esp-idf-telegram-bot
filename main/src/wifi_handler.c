@@ -22,8 +22,6 @@
 #include "lwip/err.h"
 #include "lwip/sys.h"
 #include "esp_wifi.h"
-#include "esp_http_client.h"
-#include "driver/gpio.h"
 #include "freertos/event_groups.h"
 
 #define ESP_MAXIMUM_RETRY  10
@@ -35,7 +33,7 @@
 #define WIFI_FAIL_BIT      BIT1
 
 static int s_retry_num = 0;
-static const char *TAG1 = "wifi station";
+static const char *TAG1 = "Wifi station";
 
 /* FreeRTOS event group to signal when we are connected*/
 EventGroupHandle_t s_wifi_event_group;
