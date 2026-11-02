@@ -1,13 +1,3 @@
-/* esp-idf-telegram-bot
- *
- * Author: antusystem
- * e-mail: aleantunes95@gmail.com
- * Date: 11-01-2020
- * MIT License
- * As it is described in the readme file
- *
-*/
-
 #include <stdio.h>
 #include <string.h>
 #include "freertos/FreeRTOS.h"
@@ -18,13 +8,10 @@
 
 #include "include/http_event_handler.h"
 
-/*HTTP buffer*/
 #define MAX_HTTP_RECV_BUFFER 1024
 #define MAX_HTTP_OUTPUT_BUFFER 2048
 
-/* TAGs for the system*/
-static const char *TAG = "HTTP_CLIENT Handler";
-static const char *TAG2 = "Sending sendMessage";
+static const char *TAG = "Rest Handler";
 
 /* Root cert for extracted from:
  *
@@ -51,7 +38,7 @@ void https_telegram_sendMessage_perform_post(void) {
 
     strcat(url,url_string);
     strcat(url,"/sendMessage");
-    //ESP_LOGW(TAG2, "url string es: %s",url);
+    //ESP_LOGW(TAG, "url string es: %s",url);
     esp_http_client_set_url(client, url);
 	char post_data[512] = "";
 	sprintf(post_data,"{\"chat_id\":%s,\"text\":\"Here goes the message from post\"}",CONFIG_ESP_TELEGRAM_CHAT_ID2);
@@ -62,17 +49,17 @@ void https_telegram_sendMessage_perform_post(void) {
 
     esp_err_t err = esp_http_client_perform(client);
     if (err == ESP_OK) {
-        ESP_LOGI(TAG2, "HTTP POST Status = %d, content_length = %lld",
+        ESP_LOGI(TAG, "HTTP POST Status = %d, content_length = %lld",
                 esp_http_client_get_status_code(client),
                 (long long)esp_http_client_get_content_length(client));
-        ESP_LOGW(TAG2, "Output: %s",output_buffer);
+        ESP_LOGW(TAG, "Output: %s",output_buffer);
 
     } else {
-        ESP_LOGE(TAG2, "HTTP POST request failed: %s", esp_err_to_name(err));
+        ESP_LOGE(TAG, "HTTP POST request failed: %s", esp_err_to_name(err));
     }
     esp_http_client_close(client);
     esp_http_client_cleanup(client);
-    //ESP_LOGI(TAG2, "esp_get_free_heap_size: %d", esp_get_free_heap_size ());
+    //ESP_LOGI(TAG, "esp_get_free_heap_size: %d", esp_get_free_heap_size ());
 }
 
 void http_test_task(void *pvParameters) {
