@@ -30,7 +30,8 @@
 
 //Pin connected to a led
 #define LED (GPIO_NUM_13)
-
+static const char *TAG = "Main";
+    
 void app_main(void)
 {
     //Initialize NVS
@@ -46,6 +47,7 @@ void app_main(void)
     // legacy gpio_pad_select_gpio() (removed in IDF v5+) is not needed here.
 	gpio_set_direction(LED, GPIO_MODE_OUTPUT);
 	gpio_set_level(LED, 1);
+    ESP_LOGW(TAG, "Booting...");
 
     wifi_init_sta();
 

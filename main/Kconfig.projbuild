@@ -12,4 +12,22 @@ menu "Device Configuration"
         help
             Password of the WiFi network to connect to
 
+    config ESP_TELEGRAM_TOKEN
+        string "Telegram Bot Token"
+        default "your_token"
+        help
+            Token of the Telegram bot to use for sending messages
+
+    config ESP_TELEGRAM_CHAT_ID1
+        string "Telegram Chat ID 1"
+        default "@GROUP_NAME"
+        help
+            Chat ID of the first recipient group or user
+
+    config ESP_TELEGRAM_CHAT_ID2
+        string "Telegram Chat ID 2"
+        default "12345678"
+        help
+            Chat ID of the second recipient group or user
+
 endmenu

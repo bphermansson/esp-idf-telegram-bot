@@ -1,6 +1,15 @@
 # esp-idf-telegram-bot
 
-De
+In the Telegram app or web, search for @BotFather. Start a chat and type '/newbot', Then enter a display name (what users see) and a username (which must end in bot, e.g., my_cool_helper_bot). BotFather will reply with a new API token.
+Click the cog below and set Wifi credentials, Telegram token and more under 'Device configuration'.
+Use the pen button in the app or web to create a new group. Do not add any members and give it a good name.
+In Telegram, search for @my_cool_helper_bot and open it.
+Press Start and send a message such as hello.
+Open https://api.telegram.org/bot<TOKEN>/getUpdates
+You should now see something like:
+"chat":{"id":123456789,"first_name":"...","type":"private"}
+Copy that id. It's negative for groups.
+Set it as ESP_TELEGRAM_CHAT_ID2 in idf.py menuconfig, then rebuild and flash.
 
 
 ## Overview

@@ -30,13 +30,6 @@
 #define MAX_HTTP_RECV_BUFFER 1024
 #define MAX_HTTP_OUTPUT_BUFFER 2048
 
-/*Telegram configuration*/
-#define TOKEN ""
-// Using in the task strcat(url_string,TOKEN)); the main direct from the url will be in url_string
-//The chat id that will receive the message
-#define chat_ID1 "@GROUP_NAME"
-#define chat_ID2 "12345678"
-
 /* TAGs for the system*/
 static const char *TAG = "HTTP_CLIENT Handler";
 static const char *TAG2 = "Sending getMe";
@@ -346,7 +339,7 @@ void https_telegram_sendMessage_native_get(void) {
     strcat(url,url_string);
     //Then you concatenate the method with the information
     strcat(url,"/sendMessage?chat_id=");
-    strcat(url,chat_ID1);
+    strcat(url,CONFIG_ESP_TELEGRAM_CHAT_ID1);
     /* Now you add the text*/
     strcat(url,"&text=");
     //Between every word you have to put %20 for the space (maybe there is another way for this)
@@ -435,8 +428,8 @@ void https_telegram_sendMessage_perform_post(void) {
 	// The example had this, but to add the chat id easierly I decided not to use a pointer
 	//const char *post_data = "{\"chat_id\":852596694,\"text\":\"Envio de post\"}";
 	char post_data[512] = "";
-	sprintf(post_data,"{\"chat_id\":%s,\"text\":\"Here goes the message from post\"}",chat_ID2);
-    //ESP_LOGW(TAG, "El json es es: %s",post_data);
+	sprintf(post_data,"{\"chat_id\":%s,\"text\":\"Here goes the message from post\"}",CONFIG_ESP_TELEGRAM_CHAT_ID2);
+    ESP_LOGW(TAG, "El json es es: %s",post_data);
     esp_http_client_set_method(client, HTTP_METHOD_POST);
     esp_http_client_set_header(client, "Content-Type", "application/json");
     esp_http_client_set_post_field(client, post_data, strlen(post_data));
@@ -461,12 +454,12 @@ void https_telegram_sendMessage_perform_post(void) {
 void http_test_task(void *pvParameters) {
     /* Creating the string of the url*/
     // You concatenate the host with the Token so you only have to write the method
-	strcat(url_string,TOKEN);
+	strcat(url_string,CONFIG_ESP_TELEGRAM_TOKEN);
     ESP_LOGW(TAG, "Wait 2 second before start");
     vTaskDelay(2000 / portTICK_PERIOD_MS);
 
-    ESP_LOGW(TAG, "https_telegram_getMe_perform");
-    https_telegram_getMe_perform();
+    // ESP_LOGW(TAG, "https_telegram_getMe_perform");
+    // https_telegram_getMe_perform();
     /* The functions https_telegram_getMe_native_get and https_telegram_sendMessage_native_get usually reboot the esp32 at when you use it after another and
      *  the second one finish, but I don't know why. Either way, it still send the message and obtain the getMe response, but the perform way is better
      *  for both options, especially for sending message with Json.*/
