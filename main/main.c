@@ -16,8 +16,5 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     wifi_init_sta();
-    telegram_sendMessage();
-
-    //xTaskCreatePinnedToCore(&http_test_task, "http_test_task", 8192*4, NULL, 5, NULL,1);
-
+    telegram_sendMessage("test text");
 }

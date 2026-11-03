@@ -23,8 +23,11 @@ static const char *TAG = "Rest Handler";
 extern const char telegram_certificate_pem_start[] asm("_binary_telegram_certificate_pem_start");
 extern const char telegram_certificate_pem_end[]   asm("_binary_telegram_certificate_pem_end");
 
-void telegram_sendMessage(void) {
-	char url[512] = "";
+void telegram_sendMessage(const char *message) {
+    char text[50];
+    //const int length = snprintf(text, sizeof(text), "%s", message);
+    snprintf(text, sizeof(text), "%s", message);
+    char url[512] = "";
     char output_buffer[MAX_HTTP_OUTPUT_BUFFER] = {0};   
     esp_http_client_config_t config = {
         .url = "https://api.telegram.org",
@@ -39,7 +42,7 @@ void telegram_sendMessage(void) {
     //ESP_LOGW(TAG, "url string es: %s",url);
     esp_http_client_set_url(client, url);
 	char post_data[512] = "";
-	snprintf(post_data, sizeof(post_data), "{\"chat_id\":%s,\"text\":\"Here goes the message from post\"}",CONFIG_ESP_TELEGRAM_CHAT_ID);
+	snprintf(post_data, sizeof(post_data), "{\"chat_id\":%s,\"text\":\"%s\"}",CONFIG_ESP_TELEGRAM_CHAT_ID, text);
     //ESP_LOGW(TAG, "Json: %s",post_data);
     esp_http_client_set_method(client, HTTP_METHOD_POST);
     esp_http_client_set_header(client, "Content-Type", "application/json");
